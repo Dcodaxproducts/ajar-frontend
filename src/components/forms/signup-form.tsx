@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Register, RegisterSchema } from "@/validations/auth";
@@ -19,6 +20,7 @@ const SignUpForm = () => {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<Register>({
     resolver: zodResolver(RegisterSchema),
@@ -30,6 +32,14 @@ const SignUpForm = () => {
       role: "user",
     },
   });
+
+  useEffect(() => {
+    const savedEmail = localStorage.getItem("email");
+
+    if (savedEmail) {
+      setValue("email", savedEmail);
+    }
+  }, [setValue]);
 
   const onSubmit = async (formData: Register) => {
     mutate(formData);

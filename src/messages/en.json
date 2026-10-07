@@ -263,6 +263,7 @@
     "setNewPassword": "Set your new password.",
     "verifyAccount": "Verify Account",
     "backToVerification": "Back to verification?",
+    "backToSignUp": "Back to Sign Up",
     "twoFactorEnabled": "Two Factor Authentication Enabled",
     "emailVerifiedSuccessfully": "Email Verified Successfully",
     "emailVerification": "Email Verification",

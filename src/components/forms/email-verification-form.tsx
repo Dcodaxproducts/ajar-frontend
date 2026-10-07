@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation"
 
 import Button from "../auth/button"
 import Header from "../auth/header"
+import Footer from "../auth/footer"
 import Input from "../ui/auth-input"
 import CongratulationsDialog from "../dialogs/congratulations"
 import { toast } from "../ui/toast"
@@ -20,11 +21,13 @@ const EmailVerificationForm = ({
     title,
     description,
     buttonText,
+    showBackToSignUp = false,
 }: {
     type?: string
     title?: string
     description?: string
     buttonText?: string
+    showBackToSignUp?: boolean
 }) => {
     const router = useRouter()
     const t = useTranslations("translation")
@@ -148,6 +151,13 @@ const EmailVerificationForm = ({
 
                     <Button text={buttonText || t("verifyAccount")} isPending={isPending || isVerifying} />
                 </form>
+
+                {showBackToSignUp && (
+                    <Footer
+                        linkHref="/auth/signup"
+                        linkText={t("backToSignUp")}
+                    />
+                )}
             </div>
         </>
     )

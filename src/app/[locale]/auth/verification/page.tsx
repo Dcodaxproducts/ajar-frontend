@@ -8,7 +8,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 }
 
 const Verification = () => {
-    return <AuthLayout FormComponent={<EmailVerificationForm />} />
+    return <AuthLayout FormComponent={<EmailVerificationForm showBackToSignUp />} />
 }
 
 export default Verification

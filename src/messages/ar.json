@@ -263,6 +263,7 @@
     "setNewPassword": "عيّن كلمة المرور الجديدة.",
     "verifyAccount": "تأكيد الحساب",
     "backToVerification": "العودة إلى التحقق؟",
+    "backToSignUp": "العودة إلى إنشاء الحساب",
     "twoFactorEnabled": "تم تفعيل المصادقة الثنائية",
     "emailVerifiedSuccessfully": "تم التحقق من البريد الإلكتروني بنجاح",
     "emailVerification": "التحقق من البريد الإلكتروني",

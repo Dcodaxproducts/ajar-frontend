@@ -12,7 +12,7 @@ export interface AuthButtonProps {
 }
 
 export interface FooterProps {
-  messageText: string;
+  messageText?: string;
   linkHref: string;
   linkText: string;
   className?: string;
