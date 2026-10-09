@@ -6,6 +6,7 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
+    "test": "node --experimental-strip-types --test src/tests/*.test.ts",
     "lint": "next lint"
   },
   "dependencies": {

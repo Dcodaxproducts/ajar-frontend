@@ -11,10 +11,12 @@ import Link from 'next/link'
 import { Notification } from '@/types/notification'
 import { getNotificationLink } from '@/utils/getNotificationLink'
 import Pagination from "@/components/ui/pagination"
-import { useTranslations } from 'next-intl'
+import { useLocale, useTranslations } from 'next-intl'
+import { getNotificationDisplay } from '@/utils/getNotificationDisplay'
 
 const Notifications = () => {
     const t = useTranslations("translation")
+    const locale = useLocale()
     const [currentPage, setCurrentPage] = useState(1)
     const limit = 10
 
@@ -54,10 +56,14 @@ const Notifications = () => {
                     <div className="space-y-3">
                         {notifications && notifications.length > 0 ? (
                             <>
-                                {notifications.map((item: Notification) => (
+                                {notifications.map((item: Notification) => {
+                                    const display = getNotificationDisplay(item, locale)
+                                    return (
                                     <Link
                                         key={item._id}
                                         href={getNotificationLink(item)}
+                                        lang={display.locale}
+                                        dir={display.dir}
                                         className="block group"
                                     >
                                         <Card className={`border-none shadow-sm rounded-2xl transition-all duration-200 group-hover:shadow-md ${!item.isRead ? 'bg-blue-50/40 ring-1 ring-blue-100' : 'bg-white'}`}>
@@ -72,21 +78,22 @@ const Notifications = () => {
                                                     <div className="flex-1 space-y-1">
                                                         <div className="flex justify-between items-start">
                                                             <h3 className={`text-sm tracking-tight ${!item.isRead ? 'font-semibold text-slate-900' : 'font-medium text-slate-700'}`}>
-                                                                {item.title}
+                                                                {display.title}
                                                             </h3>
                                                             <span className="text-[10px] text-slate-400 font-medium whitespace-nowrap ml-2 uppercase">
                                                                 {timeAgo(item?.createdAt?.toString() || "")}
                                                             </span>
                                                         </div>
                                                         <p className="text-xs text-slate-500 leading-relaxed">
-                                                            {item.message}
+                                                            {display.message}
                                                         </p>
                                                     </div>
                                                 </div>
                                             </CardContent>
                                         </Card>
                                     </Link>
-                                ))}
+                                    )
+                                })}
 
                                 {/* Pagination Component Added Here */}
                                 {totalPages > 1 && (

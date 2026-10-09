@@ -13,11 +13,13 @@ import { useGetUnreadCount, useMarkAllRead, useNotification } from "@/hooks/useN
 import { Notification } from "@/types/notification";
 import { getNotificationLink } from "@/utils/getNotificationLink";
 import { useGetBusinessSettings } from "@/hooks/useBusinessSettings";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
+import { getNotificationDisplay } from "@/utils/getNotificationDisplay";
 
 const NotificationContent = (props: React.HTMLAttributes<HTMLDivElement>) => {
   const { data, isLoading } = useNotification({});
   const t = useTranslations("translation");
+  const locale = useLocale();
   const notifications = data?.data;
 
   return (
@@ -42,25 +44,30 @@ const NotificationContent = (props: React.HTMLAttributes<HTMLDivElement>) => {
             <Skeleton className="h-4 w-3/4" />
           </div>
         ) : notifications && notifications.length > 0 ? (
-          notifications.map((item: Notification) => (
+          notifications.map((item: Notification) => {
+            const display = getNotificationDisplay(item, locale);
+            return (
             <Link
               key={item._id}
               href={getNotificationLink(item)}
+              lang={display.locale}
+              dir={display.dir}
               className={`block px-4 py-3 transition-colors duration-150 ${item.isRead
                 ? "text-gray-700 hover:bg-gray-50"
                 : "bg-green-50/50 text-gray-900 hover:bg-aqua/10"
                 }`}
             >
-              <p className="text-sm font-medium leading-snug">{item.title}</p>
+              <p className="text-sm font-medium leading-snug">{display.title}</p>
               <p className="text-xs text-gray-500 mt-1 line-clamp-2">
-                {item.message}
+                {display.message}
               </p>
               <div className="flex items-center text-xs text-gray-400 mt-1">
                 <ClockIcon className="h-3 w-3 mr-1" />
                 {timeAgo(item?.createdAt?.toString() || "")}
               </div>
             </Link>
-          ))
+            );
+          })
         ) : (
           <p className="px-4 py-3 text-sm text-gray-500">{t("noNewNotifications")}</p>
         )}

@@ -8,11 +8,17 @@ export interface NotificationData {
 
   // Specific fields
   type?: string;
+  eventType?: string;
   status?: string;
+  locale?: string;
+  itemName?: string;
+  dateRange?: string | null;
+  displayTitle?: string;
+  displayMessage?: string;
   creditedAmount?: number;
   deductedAmount?: number;
 
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 export interface Notification {
