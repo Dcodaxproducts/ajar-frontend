@@ -57,9 +57,12 @@ export function useUpdateBookingStatus() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: updateBookingStatus,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["bookings"] })
-      queryClient.invalidateQueries({ queryKey: ["bookingId"] })
+    onSuccess: async () => {
+      await Promise.all([
+        queryClient.invalidateQueries({ queryKey: ["bookings"] }),
+        queryClient.invalidateQueries({ queryKey: ["bookingId"] }),
+        queryClient.invalidateQueries({ queryKey: ["listingBookedDates"] }),
+      ]);
       toast({ description: t("bookingCancelledSuccessfully") })
       router.replace(`/booking/all`);
     },
